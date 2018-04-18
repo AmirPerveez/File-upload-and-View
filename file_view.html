@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript read and view a file</title>
+
+
+
+    <style type="text/css">
+
+
+
+
+  textarea {
+        background:#6495ED;
+        width: 40%;
+        height: 40%;
+        padding: 10px;
+        border:0; margin:0;
+        display: block; 
+        resize: vertical;   
+    }
+    
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+     border: 2px solid #f44336;
+}
+.input {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid #4CAF50;
+}
+
+
+body {
+    background-image: url("image2.jpg");
+}
+    </style>
+</head>
+<body >
+        
+    <input type="file"  accept=".csv,text/plain" id="myFile" class="input"><br><br>
+   
+    <button onclick="loadFileAsText()" class="button">View</button><br /><br>
+  
+    <textarea id="inputTextToSave" rows="20" cols="70" ></textarea> <br />
+  
+    <button onclick="savefile()" class="button">Save</button><br>
+
+    <button id="dlink" class="button" onchange="getfolder(event)" webkitdirectory mozdirectory msdirectory odirectory directory multiple>Save File As </button></br>
+    
+    
+    <script>
+    function loadFileAsText(){
+      var myFile = document.getElementById("myFile").files[0];
+ 
+      var fileReader = new FileReader();
+      fileReader.onload = function(fileLoadedEvent){
+          var textFromFileLoaded = fileLoadedEvent.target.result;
+          document.getElementById("inputTextToSave").value = textFromFileLoaded;
+      };
+ 
+      fileReader.readAsText(myFile, "UTF-8");
+    }
+    function savefile(){
+        var content = document.getElementById("inputTextToSave").value;
+        uriContent = "data:application/octet-stream," + encodeURIComponent(content);
+        document.getElementById("dlink").innerHTML = "<a href=" + uriContent + " download=\"savedfile.txt\">save file as</a>";
+    }
+    function getfolder(e) {
+    var files = e.target.files;
+    var path = files[0].webkitRelativePath;
+    var Folder = path.split("c/document/.txt");
+    alert(Folder[0]);
+}
+    </script>
+    
+</body>   
+</html>
